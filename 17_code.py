@@ -23,6 +23,6 @@ for i in range(0, (len(text) - k + 1)):
 # parse and print the most frequent kmeres
 parse = " ".join(str(x) for x in kmereCounts.values())
 print(parse)
-fileout = open("17_sub.py", 'wt')
+fileout = open("17_sub.txt", 'wt')
 fileout.write(parse)
 fileout.close()

@@ -12,6 +12,6 @@ def patternToNumber(pattern):
 
 parse = str(patternToNumber(text))
 print(parse)
-fileout = open("18_sub.py", 'wt')
+fileout = open("18_sub.txt", 'wt')
 fileout.write(parse)
 fileout.close()

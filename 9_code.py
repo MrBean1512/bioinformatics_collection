@@ -14,6 +14,6 @@ instring = filein.read().rstrip()
 outstring = ReversedComplement(instring)
 
 # write the file to upload
-fileout = open("9_sub.py", 'wt')
+fileout = open("9_sub.txt", 'wt')
 fileout.write(outstring)
 fileout.close()

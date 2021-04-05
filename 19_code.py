@@ -16,6 +16,6 @@ def numberToPattern(num, k):
 
 parse = numberToPattern(number, kmere)
 print(parse)
-fileout = open("19_sub.py", 'wt')
+fileout = open("19_sub.txt", 'wt')
 fileout.write(parse)
 fileout.close()

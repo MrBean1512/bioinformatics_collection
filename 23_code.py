@@ -36,6 +36,6 @@ def mostProbableMotif(dna, k , profile):
 # parse and print
 solution = mostProbableMotif(dna, k, matrix)
 print(solution)
-fileout = open("23_sub.py", 'wt')
+fileout = open("23_sub.txt", 'wt')
 fileout.write(solution)
 fileout.close()

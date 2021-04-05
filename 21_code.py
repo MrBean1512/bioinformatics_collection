@@ -64,6 +64,6 @@ def genDNeighbors(text, d):
 solution = motifEnumeration(dnaList, k, d)
 parse = " ".join(str(x) for x in solution)
 print(parse)
-fileout = open("21_sub.py", 'wt')
+fileout = open("21_sub.txt", 'wt')
 fileout.write(parse)
 fileout.close()

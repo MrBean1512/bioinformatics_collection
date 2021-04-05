@@ -46,6 +46,6 @@ def sharedMotifs(dnaList, k):
 # parse and print the most frequent kmeres
 solution = sharedMotifs(dnaList, k)[0]
 print(solution)
-fileout = open("22_sub.py", 'wt')
+fileout = open("22_sub.txt", 'wt')
 fileout.write(solution)
 fileout.close()

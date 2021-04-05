@@ -37,7 +37,7 @@ neighborhood = genDNeighbors(text, d)
 
 print(neighborhood)
 
-fileout = open('20_sub.py', 'w')
+fileout = open('20_sub.txt', 'w')
 for i in neighborhood:
     fileout.write(i+'\n')
 fileout.close()
