@@ -20,8 +20,9 @@ def scoreMotif(motif, k, profile):
         score *= profile[baseIndex[bp]][i]
     return score
 
+
 def mostProbableMotif(dna, k , profile):
-    bestScore = 0.0
+    bestScore = -1.0
     topMotifs = []
     for i in range(len(dna) - k + 1):
         kmer = dna[i:i+k]
