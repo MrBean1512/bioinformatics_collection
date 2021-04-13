@@ -18,21 +18,29 @@ del lines
 
 
 def gibbsSampler(dnaList, k, t, n):
-    motifs = []
-    for dna in dnaList:
-        #randomly select kmers from dna
-        i = random.randint(0, len(dna) - k)
-        motifs.append(dna[i:i + k - 1])    
-    bestMotifs = motifs
+
+    bestMotifs = []
     bestScore = len(dnaList[0])*t
-    for j in range(0, n):
-        i = random.randint(0, t - 1)
-        profile = formProfile(motifs[:i] + motifs[i:])
-        motifs[i] = profileMostProbableKmer(dnaList[i], k, profile)
-        score = scoreMotifList(motifs)
-        if score < bestScore:
-            bestMotifs = motifs
-            bestScore = score
+    for restarts in range(20):
+        motifs = []
+        for dna in dnaList:
+            #randomly select kmers from dna
+            i = random.randint(0, len(dna) - k)
+            motifs.append(dna[i:i + k - 1])    
+        betterMotifs = motifs
+        betterScore = len(dnaList[0])*t
+        for j in range(0, n):
+            i = random.randint(0, t - 1)
+            profile = formProfile(motifs[:i] + motifs[i:])
+            motifs[i] = profileRandomlySelectedKmer(dnaList[i], k, profile)
+            score = scoreMotifList(motifs)
+            if score < betterScore:
+                betterMotifs = motifs
+                betterScore = score
+        if betterScore < bestScore:
+            bestMotifs = betterMotifs
+            bestScore = betterScore
+    print("  ", bestScore)
     return bestMotifs
 
 def formProfile(motifList):
@@ -69,18 +77,38 @@ def scoreMotifList(motifs):
     #print("motifs: ", motifs, " \ncolumns: ", columns, " \nmaxcount: ", maxCount, " \nscore: ", (len(motifs[0])*len(motifs) - maxCount))
     return len(motifs[0])*len(motifs) - maxCount
 
-def profileMostProbableKmer(dna, k , profile):
-    # determines which motif is the most probable given a profile matrix
-    bestScore = -1.0
-    topMotifs = []
+def profileRandomlySelectedKmer(dna, k , profile):
+    # return a randomly seleced kmere with a biased die
+    probabilities = []
     for i in range(len(dna) - k + 1):
         kmer = dna[i:i+k]
-        score = scoreMotif(kmer, profile)
-        if (score > bestScore):
-            topMotifs.append(kmer)
-            bestScore = score
-            bestMotif = kmer
-    return bestMotif
+        #score = scoreMotif(kmer, profile)
+        score = scoreMotifList(kmer)
+        probabilities.append(score)
+    
+    kmerIndex = biasedDie(probabilities)
+
+    return (dna[kmerIndex:kmerIndex+k])
+    
+def biasedDie(probabilities):
+    # work with a weighted die
+    # this post on stack overflow helped me understand what was going on:
+    # https://stackoverflow.com/questions/479236/how-do-i-simulate-biased-die-in-python
+    total = sum(probabilities)
+    norms = []
+    for probability in probabilities:
+        norms.append(probability/float(total))
+    
+    sums = []
+    probSum = 0.0
+    for norm in norms:
+        probSum += norm
+        sums.append(probSum)
+    
+    roll = random.random()
+    for i, p in enumerate(sums):
+        if roll <= p:
+            return i
 
 answer = gibbsSampler(dnaList, k, t, n)
 print(answer)
