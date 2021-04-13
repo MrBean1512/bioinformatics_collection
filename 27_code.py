@@ -21,12 +21,12 @@ def gibbsSampler(dnaList, k, t, n):
 
     bestMotifs = []
     bestScore = len(dnaList[0])*t
-    for restarts in range(20):
-        motifs = []
-        for dna in dnaList:
-            #randomly select kmers from dna
-            i = random.randint(0, len(dna) - k)
-            motifs.append(dna[i:i + k - 1])    
+    motifs = []
+    for dna in dnaList:
+        #randomly select kmers from dna
+        i = random.randint(0, len(dna) - k)
+        motifs.append(dna[i:i + k - 1]) 
+    for restarts in range(5):
         betterMotifs = motifs
         betterScore = len(dnaList[0])*t
         for j in range(0, n):
